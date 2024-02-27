@@ -7,6 +7,7 @@ const user_controller = require("../controllers/userController");
 
 router.get("/coordinates", coordinate_controller.coordinate_list_get);
 
+//RETURN A BOOL DEPENDING IF THE COORDINATE IS CLOSE OR FAR OF THE CHARACTER
 router.get("/coordinates/:name", coordinate_controller.coordinate_get);
 
 //USERS

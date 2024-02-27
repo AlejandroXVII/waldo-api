@@ -9,8 +9,18 @@ exports.coordinate_list_get = asyncHandler(async (req, res, next) => {
 });
 //GET ONE COORDINATE
 exports.coordinate_get = asyncHandler(async (req, res, next) => {
-	const coordinate = await Coordinate.findOne({
+	const coordinateCharacter = await Coordinate.findOne({
 		name: req.params.name,
 	}).exec();
-	return res.send(coordinate);
+	let isCoordinateClose = false;
+	const range = 3;
+	if (
+		req.body.x <= coordinateCharacter.x + range &&
+		req.body.x >= coordinateCharacter.x - range &&
+		coordinateCharacter.y + range >= req.body.y &&
+		req.body.y >= coordinateCharacter.y - range
+	)
+		isCoordinateClose = true;
+
+	return res.send(isCoordinateClose);
 });
