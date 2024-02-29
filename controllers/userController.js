@@ -1,9 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
+const { sortBy } = require("lodash");
 
 exports.user_list_get = asyncHandler(async (req, res, next) => {
-	const allUser = await User.find({ game_completed: true }).exec();
+	const allUser = await User.find({ game_completed: true })
+		.sort({ duration_in_seconds: 1 })
+		.exec();
 	return res.json(Object.values(allUser));
 });
 
@@ -25,8 +28,10 @@ exports.user_post = asyncHandler(async (req, res, next) => {
 exports.user_put = asyncHandler(async (req, res, next) => {
 	const errors = validationResult(req);
 	const userData = await User.findById(req.params.id).exec();
-
-	time = (new Date().getTime() - userData.start_date.getTime()) / 1000;
+	time =
+		(new Date(req.body.end_date).getTime() -
+			userData.start_date.getTime()) /
+		1000;
 	console.log(time);
 	const user = new User({
 		name: req.body.name,

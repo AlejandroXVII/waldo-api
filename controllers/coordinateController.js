@@ -15,10 +15,10 @@ exports.coordinate_get = asyncHandler(async (req, res, next) => {
 	let isCoordinateClose = false;
 	const range = 3;
 	if (
-		req.body.x <= coordinateCharacter.x + range &&
-		req.body.x >= coordinateCharacter.x - range &&
-		coordinateCharacter.y + range >= req.body.y &&
-		req.body.y >= coordinateCharacter.y - range
+		req.params.x <= coordinateCharacter.x + range &&
+		req.params.x >= coordinateCharacter.x - range &&
+		coordinateCharacter.y + range >= req.params.y &&
+		req.params.y >= coordinateCharacter.y - range
 	)
 		isCoordinateClose = true;
 
